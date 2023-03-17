@@ -1,100 +1,92 @@
 import React, { useState, useEffect } from "react";
-import { Line } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Tooltip,
-  TimeScale,
-  TimeSeriesScale,
-} from "chart.js";
+import { ResponsiveLine } from "@nivo/line";
 
 const LineGraph = () => {
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Tooltip,
-    TimeScale,
-    TimeSeriesScale
-  );
-
-  const [graphData, setGraphData] = useState([]);
-
-  //   const data = [
-  //     {
-  //       x: 10,
-  //       y: 20,
-  //     },
-  //     {
-  //       x: 15,
-  //       y: 10,
-  //     },
-  //     {
-  //       x: 12,
-  //       y: 4,
-  //     },
-  //   ];
+  const [graphData, setGraphData] = useState(null);
+  const [datafetched, setDataFetched] = useState(false);
 
   const createMockData = () => {
     let data = [];
     let value = 50;
-    for (var i = 0; i < 366; i++) {
-      let date = new Date();
-      date.setHours(0, 0, 0, 0);
-      date.setDate(i);
+    for (let i = 0; i < 150; i++) {
+      const date = new Date();
+      date.setDate(i + 1);
+      const formattedDate = date.toLocaleDateString("en-US");
       value += Math.round((Math.random() < 0.5 ? 1 : 0) * Math.random() * 10);
-      data.push({ x: date, y: value });
+      data.push({ x: `${formattedDate}`, y: value });
     }
-    setGraphData(data);
+    setGraphData([{ id: "graph", color: "hsl(209, 70%, 50%)", data: data }]);
   };
 
   useEffect(() => {
     createMockData();
+    setDataFetched(true);
   }, []);
 
   return (
-    <div className="lineGraph">
-      <Line
-        data={{
-          datasets: [
-            {
-              indexAxis: "y",
-              type: "line",
-              data: graphData,
-              backgroundColor: "black",
-              borderColor: "#5AC53B",
-              borderWidth: 2,
-              pointBorderColor: " rgba(0,0,0,0)",
-              pointBackgroundColor: " rgba(0,0,0,0)",
-              pointHoverBackgroundColor: "#5AC53B",
-              pointHoverBorderColor: "#00000",
-              pointHoverBorderWidth: 4,
-              pointHoverRadius: 6,
-            },
-          ],
-        }}
-        options={{
-          plugins: {
-            tooltip: {
-              intersect: false,
-              mode: "index",
-            },
-          },
-          scales: {
-         
-
-            y: {
-              ticks: {
-                display: false,
-              },
-            },
-          },
-        }}
-      />
+    <div className="lineGraph h-[200px]">
+      {datafetched && (
+        <ResponsiveLine
+          data={graphData}
+          margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+          xScale={{ type: "point" }}
+          yScale={{
+            type: "linear",
+            min: "auto",
+            max: "auto",
+            stacked: true,
+            reverse: false,
+          }}
+          axisTop={null}
+          axisRight={null}
+          axisBottom={{
+            tickValues: [],
+            orient: "bottom",
+            tickSize: 0,
+            tickPadding: 5,
+            tickRotation: 0,
+            legend: "",
+            legendOffset: 36,
+            legendPosition: "middle",
+          }}
+          axisLeft={{
+            tickValues: [],
+            orient: "left",
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+            legend: "",
+            legendOffset: -40,
+            legendPosition: "middle",
+          }}
+          enableGridX={false}
+          enableGridY={false}
+          colors={"green"}
+          lineWidth={1}
+          enablePoints={false}
+          pointSize={3}
+          pointColor={{ theme: "grid.line.stroke" }}
+          pointBorderColor={{ from: "serieColor" }}
+          pointLabelYOffset={-12}
+          crosshairType="cross"
+          useMesh={true}
+          legends={[]}
+          tooltipFormat="ll"
+          tooltip={({ point }) => (
+            <div
+              style={{
+                background: "black",
+                padding: "10px",
+                border: "2px solid grey",
+                fontSize: "10px",
+              }}
+            >
+              <p > {point.data.xFormatted}</p>
+              <p > {point.data.yFormatted}</p>
+            </div>
+          )}
+        />
+      )}
     </div>
   );
 };
