@@ -29,7 +29,9 @@ visit to the app with this link : https://project-robinhood.vercel.app
 
 To deploy this project
 
-- Change your api key (get from finnhub)
+- Put your api key (get from finnhub) in TOKEN variable in Stats Component.
+
+run,
 
 ```bash
   npm install
