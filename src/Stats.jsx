@@ -32,7 +32,7 @@ const Stats = () => {
     });
   };
 
-  const TOKEN = process.env.REACT_APP_API_KEY ;
+  const TOKEN = import.meta.env.VITE_API_KEY;
   const BASE_URL = `https://finnhub.io/api/v1/quote`;
   const [stockData, setStockData] = useState([]);
   const [myStocks, setMyStocks] = useState([]);
