@@ -22,7 +22,7 @@ const Stats = () => {
               id: doc.id,
               data: doc.data(),
               info: res.data,
-            });
+            }); 
           })
         );
       });
