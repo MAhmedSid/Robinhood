@@ -1,8 +1,12 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
+
+
 import StatsRow from "./StatsRow";
 import { db } from "./FireBase";
+
+
 import { collection, onSnapshot } from "firebase/firestore";
+import axios from "axios";
 
 const Stats = () => {
   const getMyStocks = async (db) => {
@@ -28,7 +32,7 @@ const Stats = () => {
     });
   };
 
-  const TOKEN = `cga0johr01qqlesgbb10cga0johr01qqlesgbb1g`;
+  const TOKEN = process.env.REACT_APP_API_KEY ;
   const BASE_URL = `https://finnhub.io/api/v1/quote`;
   const [stockData, setStockData] = useState([]);
   const [myStocks, setMyStocks] = useState([]);
@@ -49,7 +53,7 @@ const Stats = () => {
       "GOOGL",
       "TSLA",
       "AMZN",
-      "BABA",
+      "MSFT",
       "UBER",
       "DIS",
       "SBUX",
@@ -75,7 +79,9 @@ const Stats = () => {
     <div className="stats py-7 pb-7 flex-[0.3] flex-col text-white ">
       <div className="stats__container flex-col flex-1 rounded border border-[#42494D] bg-[#1E2023] ">
         <div className="stats__header  flex text-base items-center justify-between border-b border-[#42494D] px-5 pt-5 pb-2 font-medium ">
-          <p>Stocks</p>
+          <p className="text-xl">
+            Shares <span className="text-[gray] text-sm">(Owned)</span>{" "}
+          </p>
         </div>
         <div className="stats__content">
           <div className="stats__rows py-4">
@@ -91,7 +97,7 @@ const Stats = () => {
           </div>
         </div>
         <div className="stats__header stats__lists border-t   flex text-base items-center justify-between border-b border-[#42494D]  px-5 pt-5 pb-2 font-medium">
-          <p>Lists</p>
+          <p className="text-xl">Lists</p>
         </div>
 
         <div className="stats__content">

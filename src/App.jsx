@@ -1,4 +1,6 @@
 import React from "react";
+
+
 import "./App.css";
 import Header from "./Header";
 import Newsfeed from "./Newsfeed";
@@ -12,7 +14,7 @@ const App = () => {
       </div>
 
       <div className="app__body flex justify-center  w-full h-[600px]">
-        <div className="app_container flex  w-[1024px] h-full px-12 gap-5 ">
+        <div className="app_container flex  w-[1024px] xl:w-[1280px] h-full px-12 pt-10 gap-5 ">
           <Newsfeed />
           <Stats />
         </div>

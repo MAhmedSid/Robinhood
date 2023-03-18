@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
+
 import { ResponsiveLine } from "@nivo/line";
+
+import CircleIcon from "@mui/icons-material/Circle";
 
 const LineGraph = () => {
   const [graphData, setGraphData] = useState(null);
@@ -8,7 +11,7 @@ const LineGraph = () => {
   const createMockData = () => {
     let data = [];
     let value = 50;
-    for (let i = 0; i < 150; i++) {
+    for (let i = 0; i < 100; i++) {
       const date = new Date();
       date.setDate(i + 1);
       const formattedDate = date.toLocaleDateString("en-US");
@@ -77,12 +80,16 @@ const LineGraph = () => {
               style={{
                 background: "black",
                 padding: "10px",
-                border: "2px solid grey",
                 fontSize: "10px",
               }}
             >
-              <p > {point.data.xFormatted}</p>
-              <p > {point.data.yFormatted}</p>
+              <p className="font-mono text-sm">
+                {" "}
+                <CircleIcon
+                  style={{ fontSize: "14px", paddingBottom: "6px" }}
+                />
+                {point.data.xFormatted},{point.data.yFormatted}
+              </p>
             </div>
           )}
         />

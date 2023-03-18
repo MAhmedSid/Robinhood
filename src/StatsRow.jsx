@@ -1,7 +1,10 @@
 import React from "react";
-import stockImg from "./assets/stock.svg";
-import stockImg2 from "./assets/stock2.svg";
+
+
+import stockDownImg from "./assets/stockDown.svg";
+import stockUpImg from "./assets/stockUp.svg";
 import { db } from "./FireBase";
+
 import {
   collection,
   query,
@@ -9,12 +12,13 @@ import {
   getDocs,
   doc,
   updateDoc,
-  addDoc
+  addDoc,
 } from "firebase/firestore";
+import NorthIcon from "@mui/icons-material/North";
+import SouthIcon from "@mui/icons-material/South";
 
 const StatsRow = (props) => {
   const percentage = ((props.price - props.openPrice) / props.openPrice) * 100;
-  // console.log(percentage);
 
   const buyStock = async () => {
     const q = query(
@@ -27,7 +31,6 @@ const StatsRow = (props) => {
       //Update the record
 
       querySnapshot.forEach(async (document) => {
-        
         const myStocksCol = doc(db, "myStocks", document.id);
         await updateDoc(myStocksCol, {
           shares: (document.data().shares += 1),
@@ -54,15 +57,24 @@ const StatsRow = (props) => {
       </div>
       <div className="row__chart px-2 ">
         <img
-          src={props.percentage > 0 ? stockImg : stockImg2}
+          src={percentage > 0 ? stockUpImg : stockDownImg}
           alt="chart"
           width={80}
           height={16}
         />
       </div>
       <div className="row__numbers text-right text-xs font-medium   ">
-        <p className="row__price pb-[4px]">{props.price}</p>
-        <p className="row__percentage text-[#5ac53b]">
+        <p className="row__price pb-[4px]">{props.price}/USD</p>
+        <p
+          className={`row__percentage ${
+            percentage > 0 ? "text-[#5ac53b]" : "text-[red]"
+          }`}
+        >
+          {percentage > 0 ? (
+            <NorthIcon style={{ fontSize: "16px", paddingBottom: "4px" }} />
+          ) : (
+            <SouthIcon style={{ fontSize: "16px", paddingBottom: "4px" }} />
+          )}
           {percentage > 0 && "+"}
           {Number(percentage).toFixed(2)}%
         </p>

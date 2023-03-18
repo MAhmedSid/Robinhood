@@ -1,9 +1,10 @@
 import React,{useState} from "react";
+
 import LineGraph from "./LineGraph";
 import TimeLine from "./TimeLine";
+
 import {Chip}  from "@mui/material";
 import {Avatar} from "@mui/material";
-import { color } from "@mui/system";
 
 const Newsfeed = () => {
 
@@ -27,8 +28,8 @@ const Newsfeed = () => {
       <div className="newsfeed__container">
         <div className="newsfeed__chartSection">
           <div className="newsfeed__portfolio">
-            <h2>$114,656</h2>
-            <p>+$44.63 (+0.04%) Today</p>
+            <h2 className="text-3xl font-semibold">$114,656</h2>
+            <p>+$44.63 (+0.04%) <span className="text-xs text-[grey]">Today</span></p>
           </div>
           <div className="newsfeed__chart">
             <LineGraph />
